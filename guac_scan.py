@@ -4,8 +4,8 @@ import subprocess as sp
 from ipaddress import ip_network
 import xml.etree.ElementTree as ET
 from argparse import ArgumentParser
-from tempfile import NamedTemporaryFile
-from xml.dom.minidom import parseString
+from tempfile import NamedTemporaryFile	# for nmap temporary output file
+from xml.dom.minidom import parseString	# for pretty xml output only
 
 ### DEFAULTS ###
 
@@ -22,6 +22,7 @@ interface_keywords = ['enp', 'wlp', 'eth', 'wlan']
 
 def get_subnet():
 	'''
+	parses output of 'ip address' command
 	returns ip_network object for first "eth" interface
 	'''
 
@@ -55,6 +56,9 @@ def get_subnet():
 
 
 class Host():
+	'''
+	basic class for storing nmap results
+	'''
 	
 	def __init__(self, ip=None, mac=None, hostname=None, ports=None):
 		self.ip			= ip
@@ -64,6 +68,9 @@ class Host():
 
 
 class Nmap():
+	'''
+	basic nmap wrapper
+	'''
 
 	def __init__(self, targets, ports=services.keys()):
 		'''
